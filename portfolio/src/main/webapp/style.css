@@ -4,10 +4,6 @@
   width: 85%;
 }
 
-#greeting-container {
-  margin-top: 20px;
-}
-
 #expand {
   margin-top: 20px;
 }
@@ -34,7 +30,7 @@ h1 {
     padding-top: 30px;
     padding-bottom: 30px;
 }
-
+/* Flexbox */
 .subParagraphs {
     display: flex;
     justify-content: space-evenly;
