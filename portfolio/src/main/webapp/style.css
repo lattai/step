@@ -4,34 +4,66 @@
   width: 85%;
 }
 
-#expand {
-  margin-top: 20px;
+#heading {
+    background-image:  url("images/cam.jpg");
+    background-position-y: 50%;
+    width: 100%;
+    height: 80%;
+    background-size: cover;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+#rectangle{
+    height: 125px;
+    width: 60%;
+    background-color: olivedrab;
+    opacity: 0.95;
+    line-height: 1;
+
 }
 
 h1 {
     font-family: 'Permanent Marker';
-    color: mediumorchid;
+    color: white;
     font-size: 50px;
     text-align: center;
+    padding: 0px;
+    opacity: 1;
+}
+h3 {
+    font-family: 'Permanent Marker';
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    padding: 0px;
+    opacity: 1;
 }
 
+#gallery {
+    width: 60%;
+}
 #gallery img{
-    padding: 0 5px;
+    padding: 0.5px;
     width: 28%;
 }
 #gallery img:hover{
    opacity: 0.7; 
 }
 
-#heading {
-    background-image:  url("images/wall.jpeg");
-    width: 100%;
-    background-size: cover;
-    padding-top: 30px;
-    padding-bottom: 30px;
+
+/* Subparagraph Flexbox */
+#expand {
+  margin-top: 20px;
 }
-/* Flexbox */
 .subParagraphs {
     display: flex;
     justify-content: space-evenly;
+}
+#subPar:hover {
+    background-color: lightcyan;
+}
+
+#about-container {
+    background-color: lightcyan;
 }

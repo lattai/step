@@ -15,6 +15,7 @@
 /**
  * Notifies when ANY subparagraph is hovered
  */
+ 
 function hover(){
     console.log("Hovered")
 }
@@ -22,20 +23,29 @@ function hover(){
 /**
   * Adds filler paragraph when ANY subparagraph is clicked.
    */
+var paragraphTitle
 function expand(info){
-    var paragraphTitle = "" + info;
-    console.log(paragraphTitle + " clicked")
     const aboutMeContainer = document.getElementById('about-container');
-    if (paragraphTitle == "about"){
-        aboutMeContainer.innerText = "ABOUT Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.ABOUT "
+    //Clears the paragraph text if the header for the section you're already on is clicked.
+    if (paragraphTitle == ""+info){
+        aboutMeContainer.innerText = "";
+        paragraphTitle = "";
     }
-	else if (paragraphTitle == "projects"){
-        aboutMeContainer.innerText = "PROJECTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.PROJECTS "
+    else{
+    	paragraphTitle = "" + info;
+    	console.log(paragraphTitle + " clicked")
+    	if (paragraphTitle == "about"){
+        	aboutMeContainer.innerText = "ABOUT Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.ABOUT "
+    	}
+		else if (paragraphTitle == "projects"){
+        	aboutMeContainer.innerText = "PROJECTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.PROJECTS "
+    	}
+		else if (paragraphTitle == "facts"){
+       	 	aboutMeContainer.innerText = "FACTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.FACTS "
+    	}
+    	else if (paragraphTitle == "links"){
+        	aboutMeContainer.innerText = "LINKS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.LINKS "
+    	}
     }
-	else if (paragraphTitle == "facts"){
-        aboutMeContainer.innerText = "FACTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.FACTS "
-    }
-    else if (paragraphTitle == "links"){
-        aboutMeContainer.innerText = "LINKS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.LINKS "
-    }
+    
 }
