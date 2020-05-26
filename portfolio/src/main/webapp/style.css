@@ -7,6 +7,11 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#expand {
+  margin-top: 20px;
+}
+
 h1 {
     font-family: 'Permanent Marker';
     color: mediumorchid;
@@ -15,11 +20,11 @@ h1 {
 }
 
 #gallery img{
-        padding: 0 5px;
-        width: 28%;
+    padding: 0 5px;
+    width: 28%;
 }
 #gallery img:hover{
-   opacity: 0.7;
+   opacity: 0.7; 
 }
 
 #heading {
@@ -28,4 +33,9 @@ h1 {
     background-size: cover;
     padding-top: 30px;
     padding-bottom: 30px;
+}
+
+.subParagraphs {
+    display: flex;
+    justify-content: space-evenly;
 }
