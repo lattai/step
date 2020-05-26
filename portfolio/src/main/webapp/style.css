@@ -9,10 +9,9 @@
 }
 h1 {
     font-family: 'Permanent Marker';
-    font-size: 30px;
+    color: mediumorchid;
+    font-size: 50px;
     text-align: center;
-  text-decoration: underline;
-  text-decoration-color: honeydew;
 }
 
 #gallery img{
@@ -21,4 +20,12 @@ h1 {
 }
 #gallery img:hover{
    opacity: 0.7;
+}
+
+#heading {
+    background-image:  url("images/wall.jpeg");
+    width: 100%;
+    background-size: cover;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
