@@ -11,23 +11,23 @@
       
     <div id= "heading">
         <marquee>:)</marquee>
-      <h1>My Portfolio</h1>
+        <div id = "rectangle">
+            <h1>Leah Attai</h1><h3 >Portfolio</h3>
+        </div>
     </div>
     <div id="content">
         <p>This is my portfolio.</p>
         <p>Hello! My name is Leah and I'm excited to be a STEP Intern this summer!</p>
-        <img src="/images/leah.jpeg" alt = "my Face" >
-        <p>Click here to get a random message:</p>
-        <button onclick="addRandomGreeting()">Hello</button>
-        <div id="greeting-container"></div>
+        <br>
 
         <div class = "subParagraphs">
-        	<div onmouseover="hover()" onclick="expand()"><h2>About me</h2></div>
-        	
-        	<h2>Past Projects</h2>
-        	<h2>Links</h2>
+        	<div id= "subPar" onclick="expand('about')"><h2>About me</h2></div>
+        	<div id= "subPar" onclick="expand('projects')"><h2>Past Projects</h2></div>
+            <div id= "subPar" onclick="expand('facts')"><h2>Fun Facts</h2></div>
+        	<div id= "subPar" onclick="expand('links')"><h2>Links</h2></div>
          </div>
         <div id= "about-container"></div>
+        </br>
         <a href= "https://www.linkedin.com/in/leah-attai-203">LinkedIn </a> </br>
         <a href= "https://github.com/lattai">GitHub </a> </br>
         
@@ -41,7 +41,6 @@
             <a target="_blank" alt = "Technica 2019" href ="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.gettysburg.edu%2Fnews%2Fstories%3Fid%3D854d16d8-f587-48a0-b78b-97d718e45a5c%26pageTitle%3DComputer%2BScience%2Bstudents%2Bat%2BGettysburg%2Bgot%2Bit%2Bdone%2521&psig=AOvVaw2Cyv0bVxYUoMYil6qA-mgZ&ust=1590176828049000&source=images&cd=vfe&ved=0CAMQjB1qFwoTCODsjrrcxekCFQAAAAAdAAAAABAa">
                 <img src= "/images/technica.jpg" alt = "Technica 2019"> </a>
         </div>
-        <h2>Fun Facts</h2>
     </div>
   </body>
 </html>

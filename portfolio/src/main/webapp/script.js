@@ -13,26 +13,39 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Notifies when ANY subparagraph is hovered
  */
-
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-    console.log("I can wiggle my ears.");
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
-}
-
+ 
 function hover(){
     console.log("Hovered")
 }
-function expand(){
-    console.log("About me clicked")
+
+/**
+  * Adds filler paragraph when ANY subparagraph is clicked.
+   */
+var paragraphTitle
+function expand(info){
     const aboutMeContainer = document.getElementById('about-container');
-    aboutMeContainer.innerText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+    //Clears the paragraph text if the header for the section you're already on is clicked.
+    if (paragraphTitle == ""+info){
+        aboutMeContainer.innerText = "";
+        paragraphTitle = "";
+    }
+    else{
+    	paragraphTitle = "" + info;
+    	console.log(paragraphTitle + " clicked")
+    	if (paragraphTitle == "about"){
+        	aboutMeContainer.innerText = "ABOUT Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.ABOUT "
+    	}
+		else if (paragraphTitle == "projects"){
+        	aboutMeContainer.innerText = "PROJECTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.PROJECTS "
+    	}
+		else if (paragraphTitle == "facts"){
+       	 	aboutMeContainer.innerText = "FACTS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.FACTS "
+    	}
+    	else if (paragraphTitle == "links"){
+        	aboutMeContainer.innerText = "LINKS Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.LINKS "
+    	}
+    }
+    
 }
