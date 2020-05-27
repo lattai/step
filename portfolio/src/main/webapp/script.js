@@ -27,7 +27,7 @@ var paragraphTitle
 function expand(info){
     const aboutMeContainer = document.getElementById('about-container');
     //Clears the paragraph text if the header for the section you're already on is clicked.
-    if (paragraphTitle == ""+info){
+    if (paragraphTitle == "" + info){
         aboutMeContainer.innerText = "";
         paragraphTitle = "";
     }

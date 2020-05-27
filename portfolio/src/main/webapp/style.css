@@ -3,6 +3,9 @@
   margin-right: auto;
   width: 85%;
 }
+body {
+    background-color: rgb(108, 160, 115)
+}
 
 #heading {
     background-image:  url("images/cam.jpg");
@@ -11,45 +14,57 @@
     height: 80%;
     background-size: cover;
     padding-top: 50px;
+    padding-left: 0px;
+    padding-right: 0px;
     padding-bottom: 50px;
 }
 
 #rectangle{
     height: 125px;
-    width: 60%;
-    background-color: olivedrab;
+    width: 50%;
+    background-color: rgb(108, 160, 115);
     opacity: 0.95;
-    line-height: 1;
-
-}
-
-h1 {
-    font-family: 'Permanent Marker';
-    color: white;
-    font-size: 50px;
-    text-align: center;
-    padding: 0px;
-    opacity: 1;
-}
-h3 {
     font-family: 'Permanent Marker';
     color: white;
     font-size: 30px;
     text-align: center;
     padding: 0px;
-    opacity: 1;
+    line-height: 1;
+
+}
+
+h3 {
+    font-size: 30px;
+    line-height: 0.2;
+}
+
+/* Gallery */
+#galleryBox {
+    padding: 10px; 
+    background-color: antiquewhite;
+    border-radius: 5px;
+    font-family: 'Permanent Marker';
+    color: rgb(108, 160, 115);
+    font-size: 30px;
+    text-align: center;
+    line-height: 0;
+    width: 90%
 }
 
 #gallery {
-    width: 60%;
+    width: auto;
+    display: flex;
+    justify-content: space-evenly;
 }
 #gallery img{
-    padding: 0.5px;
-    width: 28%;
+    padding: 0px;
+    height: 200px;
 }
 #gallery img:hover{
-   opacity: 0.7; 
+   opacity: 0.8; 
 }
+
+
 
 
 /* Subparagraph Flexbox */
@@ -60,7 +75,7 @@ h3 {
     display: flex;
     justify-content: space-evenly;
 }
-#subPar:hover {
+.subPar:hover {
     background-color: lightcyan;
 }
 
