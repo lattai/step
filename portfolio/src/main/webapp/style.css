@@ -2,9 +2,10 @@
   margin-left: auto;
   margin-right: auto;
   width: 85%;
+  text-align: center;
 }
 body {
-    background-color: rgb(108, 160, 115)
+    background-color: rgb(108, 160, 115);
 }
 
 #heading {
@@ -22,21 +23,29 @@ body {
 #rectangle{
     height: 125px;
     width: 50%;
+    border-radius: 0px 10px 10px 0px;
     background-color: rgb(108, 160, 115);
     opacity: 0.95;
     font-family: 'Permanent Marker';
-    color: white;
+    color: antiquewhite;
+    text-shadow: 1px 2px rgb(230, 87, 0);
     font-size: 30px;
     text-align: center;
     padding: 0px;
-    line-height: 1;
+    line-height: 1.5;
 
 }
-
 h3 {
     font-size: 30px;
     line-height: 0.2;
+    text-shadow: none;
 }
+h1 {
+    font-family: 'Permanent Marker';
+    color: antiquewhite;
+    font-size: 45px;
+}
+
 
 /* Gallery */
 #galleryBox {
@@ -45,12 +54,12 @@ h3 {
     border-radius: 5px;
     font-family: 'Permanent Marker';
     color: rgb(108, 160, 115);
+    text-shadow: 1px 2px rgb(230, 87, 0);
     font-size: 30px;
     text-align: center;
     line-height: 0;
-    width: 90%
+    width: 1000px;
 }
-
 #gallery {
     width: auto;
     display: flex;
@@ -64,9 +73,6 @@ h3 {
    opacity: 0.8; 
 }
 
-
-
-
 /* Subparagraph Flexbox */
 #expand {
   margin-top: 20px;
@@ -75,10 +81,30 @@ h3 {
     display: flex;
     justify-content: space-evenly;
 }
-.subPar:hover {
-    background-color: lightcyan;
+.subpar {
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
+/* .subPar:hover {
+    background-color: lightcyan;
+} */
 
 #about-container {
     background-color: lightcyan;
+}
+
+/* Social Links */
+#links{
+    display: flex;
+    justify-content: space-evenly;
+}
+.link {
+    font-family: 'Permanent Marker';
+    color: antiquewhite;
+    font-size: 25px;
+    text-decoration: none;
+}
+.link:hover {
+    text-shadow: 1px 2px rgb(230, 87, 0);
 }
