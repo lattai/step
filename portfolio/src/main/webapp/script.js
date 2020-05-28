@@ -48,23 +48,24 @@ var funFacts = " - I got into CS by doing robotics in middle school!"+
     "\n - I am the mother to several plants!"+
     "\n - I’m very competitive at Pictionary!";
 
-
-function expand(info){
+// Opens information for whichever tab was clicked. 
+function openTab(info){
     const aboutMeContainer = document.getElementById('about-container');
-    const buttonClicked = document.getElementById(""+info);
+    const buttonClicked = document.getElementById(info);
     //Clears the paragraph text if the header for the section you're already on is clicked.
-    if (paragraphTitle == "" + info){
+    if (paragraphTitle == info){
         aboutMeContainer.innerText = "";
         paragraphTitle = "";
         buttonClicked.className = buttonClicked.className.replace(" activeTab", "");
     }
     else{
+        // Clears previously active tab, changes class of newly active tab
         var alreadyOpenTab = document.getElementsByClassName("activeTab");
-        for (var i = 0; i < alreadyOpenTab.length; i++)
-            alreadyOpenTab[i].className = alreadyOpenTab[0].className.replace(" activeTab", "");
-    	paragraphTitle = "" + info;
-    	console.log(paragraphTitle + " clicked")
+        if (alreadyOpenTab.length > 0)
+            alreadyOpenTab[0].className = alreadyOpenTab[0].className.replace(" activeTab", "");
+    	paragraphTitle = info;
         buttonClicked.className += " activeTab";
+        // Fills content for respective tab opened
     	if (paragraphTitle == "about")
         	aboutMeContainer.innerText =  aboutMe;
 		else if (paragraphTitle == "projects")

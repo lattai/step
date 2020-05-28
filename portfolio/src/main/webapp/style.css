@@ -86,14 +86,12 @@ h1 {
     padding-left: 10px;
     padding-right: 10px;
 }
-
 .activeTab{
     background-color: rgb(230, 87, 0);
     color: antiquewhite;
     text-shadow: rgb(108, 160, 115);
     border-radius: 10px 10px 0px 0px;
 }
-
 #about-container { 
     background-color: rgb(230, 87, 0);
     color: antiquewhite;
