@@ -16,7 +16,7 @@
  * Notifies when ANY subparagraph is hovered
  */
  
-function hover(){
+function hover() {
     console.log("Hovered")
 }
 
@@ -57,8 +57,7 @@ function openTab(info) {
         aboutMeContainer.innerText = "";
         paragraphTitle = "";
         buttonClicked.className = buttonClicked.className.replace(" activeTab", "");
-    }
-    else {
+    } else {
         // Clears previously active tab, changes class of newly active tab
         var alreadyOpenTab = document.getElementsByClassName("activeTab");
         if (alreadyOpenTab.length > 0) {
