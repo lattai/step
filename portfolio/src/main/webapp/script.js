@@ -65,7 +65,7 @@ function openTab(info) {
             alreadyOpenTab[0].className = alreadyOpenTab[0].className.replace(" activeTab", "");
         }
     	paragraphTitle = info;
-        buttonClicked.className += " activeTab";
+        buttonClicked.className = buttonClicked.className + " activeTab";
         // Fills content for respective tab opened
         if (paragraphTitle == "about") {
             aboutMeContainer.innerText =  aboutMe;
