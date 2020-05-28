@@ -51,14 +51,14 @@ h1 {
 #galleryBox {
     padding: 10px; 
     background-color: antiquewhite;
-    border-radius: 5px;
+    border-radius: 10px;
     font-family: 'Permanent Marker';
     color: rgb(108, 160, 115);
     text-shadow: 1px 2px rgb(230, 87, 0);
     font-size: 30px;
     text-align: center;
     line-height: 0;
-    width: 1000px;
+    max-width: 1000px;
 }
 #gallery {
     width: auto;
@@ -86,13 +86,23 @@ h1 {
     padding-left: 10px;
     padding-right: 10px;
 }
-/* .subPar:hover {
-    background-color: lightcyan;
-} */
 
-#about-container {
-    background-color: lightcyan;
+.activeTab{
+    background-color: rgb(230, 87, 0);
+    color: antiquewhite;
+    text-shadow: rgb(108, 160, 115);
+    border-radius: 10px 10px 0px 0px;
 }
+
+#about-container { 
+    background-color: rgb(230, 87, 0);
+    color: antiquewhite;
+    font-family: Tahoma, Geneva, sans-serif;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 1200px;
+}
+
 
 /* Social Links */
 #links{
