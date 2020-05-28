@@ -49,32 +49,30 @@ var funFacts = " - I got into CS by doing robotics in middle school!"+
     "\n - I’m very competitive at Pictionary!";
 
 // Opens information for whichever tab was clicked. 
-function openTab(info){
+function openTab(info) {
     const aboutMeContainer = document.getElementById('about-container');
     const buttonClicked = document.getElementById(info);
     //Clears the paragraph text if the header for the section you're already on is clicked.
-    if (paragraphTitle == info){
+    if (paragraphTitle == info) {
         aboutMeContainer.innerText = "";
         paragraphTitle = "";
         buttonClicked.className = buttonClicked.className.replace(" activeTab", "");
     }
-    else{
+    else {
         // Clears previously active tab, changes class of newly active tab
         var alreadyOpenTab = document.getElementsByClassName("activeTab");
-        if (alreadyOpenTab.length > 0){
+        if (alreadyOpenTab.length > 0) {
             alreadyOpenTab[0].className = alreadyOpenTab[0].className.replace(" activeTab", "");
         }
     	paragraphTitle = info;
         buttonClicked.className += " activeTab";
         // Fills content for respective tab opened
-    	if (paragraphTitle == "about"){
-        	aboutMeContainer.innerText =  aboutMe;
-            }
-		else if (paragraphTitle == "projects"){
-        	aboutMeContainer.innerText = pastProjects;
-            }
-		else if (paragraphTitle == "facts"){
-       	 	aboutMeContainer.innerText = funFacts;
-            }
+        if (paragraphTitle == "about") {
+            aboutMeContainer.innerText =  aboutMe;
+        } else if (paragraphTitle == "projects") {
+            aboutMeContainer.innerText = pastProjects;
+        } else if (paragraphTitle == "facts") {
+            aboutMeContainer.innerText = funFacts;
+        }
     }
 }
