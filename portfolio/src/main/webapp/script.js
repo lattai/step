@@ -33,15 +33,15 @@ var aboutMe = "Hi! My name is Leah, and I’m a rising sophomore at Gettysburg C
     + "Java, Javascript and Python. "
     + "\n\nCurrently, I am a Student Training in Engineering Program (STEP) intern at Google.";
 var pastProjects = `Schedify \n\tSocial Networking / Planner webapp using Google Calendar API, final project for Google Computer Science Summer Institute`
-+"\n\tPYTHON HTML CSS "+
-+"\n\tKevin Cam Michael Kelly"+
-"\nGStress"+
-"\n\tHealth and wellness website designed for students of Gettysburg College"+
-"\n\tHTML CSS JS"+
-"\n\tKarla Gonzalez"+
-"\nUnspoken"+
-"\n\tWebsite designed to teach Sign Language"+
-"\n\tMelissa Wilson Rebecca Kalapala Sabrina Ahmed Reina";
+    +"\n\tPYTHON HTML CSS "+
+    +"\n\tKevin Cam Michael Kelly"+
+    "\nGStress"+
+    "\n\tHealth and wellness website designed for students of Gettysburg College"+
+    "\n\tHTML CSS JS"+
+    "\n\tKarla Gonzalez"+  
+    "\nUnspoken"+
+    "\n\tWebsite designed to teach Sign Language"+
+    "\n\tMelissa Wilson Rebecca Kalapala Sabrina Ahmed Reina";
 var funFacts = " - I got into CS by doing robotics in middle school!"+
     "\n - My favorite color is Yellow!"+
     "\n - I can wiggle my ears and eyebrows!"+
@@ -61,16 +61,20 @@ function openTab(info){
     else{
         // Clears previously active tab, changes class of newly active tab
         var alreadyOpenTab = document.getElementsByClassName("activeTab");
-        if (alreadyOpenTab.length > 0)
+        if (alreadyOpenTab.length > 0){
             alreadyOpenTab[0].className = alreadyOpenTab[0].className.replace(" activeTab", "");
+        }
     	paragraphTitle = info;
         buttonClicked.className += " activeTab";
         // Fills content for respective tab opened
-    	if (paragraphTitle == "about")
+    	if (paragraphTitle == "about"){
         	aboutMeContainer.innerText =  aboutMe;
-		else if (paragraphTitle == "projects")
+            }
+		else if (paragraphTitle == "projects"){
         	aboutMeContainer.innerText = pastProjects;
-		else if (paragraphTitle == "facts")
+            }
+		else if (paragraphTitle == "facts"){
        	 	aboutMeContainer.innerText = funFacts;
+            }
     }
 }
