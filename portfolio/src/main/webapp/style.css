@@ -2,11 +2,13 @@
     --olive: rgb(108, 160, 115);
     --red: rgb(230, 87, 0);
     --off-white: antiquewhite;
+    --heading1: min(45px, 12vw);
+    --heading2: min(30px, 6vw);
 }
 #content {
     margin-left: auto;
     margin-right: auto;
-    width: 85%;
+    width: 85vw;
     text-align: center;
 }
 body {
@@ -16,8 +18,8 @@ body {
 #heading {
     background-image: url("images/cam.jpg");
     background-position-y: 50%;
-    width: 100%;
-    height: 80%;
+    width: 100vw;
+    max-height: 25vh;
     background-size: cover;
     padding-top: 50px;
     padding-left: 0px;
@@ -26,29 +28,30 @@ body {
 }
 
 #rectangle{
-    height: 125px;
-    width: 50%;
+    height: auto;
+    width: 50vw;
     border-radius: 0px 10px 10px 0px;
     background-color: var(--olive);
     opacity: 0.95;
     font-family: 'Permanent Marker';
     color: var(--off-white);
     text-shadow: 1px 2px var(--red);
-    font-size: 30px;
+    font-size: var(--heading1);
     text-align: center;
     padding: 0px;
-    line-height: 1.5;
+    padding-bottom: 15px;
+    line-height: min(1vw, 1.5);
 
 }
 h3 {
-    font-size: 30px;
+    font-size: var(--heading2);
     line-height: 0.2;
     text-shadow: none;
 }
 h1 {
     font-family: 'Permanent Marker';
     color: var(--off-white);
-    font-size: 45px;
+    font-size: var(--heading1);
 }
 
 
@@ -60,7 +63,7 @@ h1 {
     font-family: 'Permanent Marker';
     text-shadow: 1px 2px var(--red);
     color: var(--olive);
-    font-size: 30px;
+    font-size: vaar(--heading1);
     text-align: center;
     line-height: 0;
     max-width: 1000px;
@@ -71,13 +74,24 @@ h1 {
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
-#gallery img{
+#gallery img {
     padding: 0px;
     max-height: 200px;
+    max-width: 70vw;
 }
 #gallery img:hover{
    opacity: 0.8; 
 }
+#gallery a {
+    color: var(--red);
+    background-color: var(--off-white);
+    font-size: 20px;
+    text-decoration: none;
+    text-shadow: none;
+    font-family: Tahoma, Geneva, sans-serif;
+    padding-bottom: 5px;
+}
+
 
 /* Subparagraph Flexbox */
 #expand {
@@ -89,9 +103,9 @@ h1 {
 }
 .subpar {
     border-radius: 10px;
-    min-width: 33%;
+    min-width: 33vw;
 }
-.activeTab{
+.activeTab {
     background-color: var(--red);
     border-radius: 10px 10px 0px 0px;
     text-shadow: 1px 2px var(--olive);
@@ -103,18 +117,19 @@ h1 {
     padding: 10px;
     border-radius: 10px;
     max-width: 1200px;
+    font-size: 15px;
 }
 
 
 /* Social Links */
-#links{
+#links {
     display: flex;
     justify-content: space-evenly;
 }
 .link {
     font-family: 'Permanent Marker';
     color: var(--off-white);
-    font-size: 25px;
+    font-size: var(--heading2);
     text-decoration: none;
 }
 .link:hover {
