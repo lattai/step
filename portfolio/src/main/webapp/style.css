@@ -15,6 +15,11 @@ body {
     background-color: var(--olive);
 }
 
+#welcomeText {
+    font-family:  Tahoma, Geneva, sans-serif;
+    color: var(--off-white);
+}
+
 #heading {
     background-image: url("images/cam.jpg");
     background-position-y: 50%;
@@ -63,7 +68,7 @@ h1 {
     font-family: 'Permanent Marker';
     text-shadow: 1px 2px var(--red);
     color: var(--olive);
-    font-size: vaar(--heading1);
+    font-size: var(--heading2);
     text-align: center;
     line-height: 0;
     max-width: 1000px;
