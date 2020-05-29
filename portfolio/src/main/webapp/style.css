@@ -78,6 +78,16 @@ h1 {
 #gallery img:hover{
    opacity: 0.8; 
 }
+#gallery a {
+    color: var(--red);
+    background-color: var(--off-white);
+    font-size: 20px;
+    text-decoration: none;
+    text-shadow: none;
+    font-family: Tahoma, Geneva, sans-serif;
+    padding-bottom: 5px;
+}
+
 
 /* Subparagraph Flexbox */
 #expand {
@@ -103,6 +113,7 @@ h1 {
     padding: 10px;
     border-radius: 10px;
     max-width: 1200px;
+    font-size: 15px;
 }
 
 
