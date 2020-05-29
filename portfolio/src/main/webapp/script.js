@@ -50,13 +50,13 @@ var funFacts = " - I got into CS by doing robotics in middle school!"+
 
 // Opens information for whichever tab was clicked. 
 function openTab(info) {
-    const aboutMeContainer = document.getElementById('about-container');
-    const buttonClicked = document.getElementById(info);
+    const SUBPARAGRAPH_CONTAINER = document.getElementById('about-container');
+    const BUTTON_CLICKED = document.getElementById(info);
     //Clears the paragraph text if the header for the section you're already on is clicked.
     if (paragraphTitle == info) {
-        aboutMeContainer.innerText = "";
+        SUBPARAGRAPH_CONTAINER.innerText = "";
         paragraphTitle = "";
-        buttonClicked.className = buttonClicked.className.replace(" activeTab", "");
+        BUTTON_CLICKED.className = BUTTON_CLICKED.className.replace(" activeTab", "");
     } else {
         // Clears previously active tab, changes class of newly active tab
         var alreadyOpenTab = document.getElementsByClassName("activeTab");
@@ -64,14 +64,15 @@ function openTab(info) {
             alreadyOpenTab[0].className = alreadyOpenTab[0].className.replace(" activeTab", "");
         }
     	paragraphTitle = info;
-        buttonClicked.className = buttonClicked.className + " activeTab";
+        BUTTON_CLICKED.className = BUTTON_CLICKED.className + " activeTab";
         // Fills content for respective tab opened
         if (paragraphTitle == "about") {
-            aboutMeContainer.innerText =  aboutMe;
+            SUBPARAGRAPH_CONTAINER.innerText =  aboutMe;
         } else if (paragraphTitle == "projects") {
-            aboutMeContainer.innerText = pastProjects;
+            SUBPARAGRAPH_CONTAINER.innerText = pastProjects;
         } else if (paragraphTitle == "facts") {
-            aboutMeContainer.innerText = funFacts;
+            SUBPARAGRAPH_CONTAINER.innerText = funFacts;
         }
     }
 }
+
