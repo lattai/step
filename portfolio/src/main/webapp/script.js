@@ -43,7 +43,7 @@ var funFacts = " - I got into CS by doing robotics in middle school!"+
 
 // Opens information for whichever tab was clicked. 
 function openTab(info) {
-	const SUBPARAGRAPH_CONTAINER = document.getElementById('about-container');
+    const SUBPARAGRAPH_CONTAINER = document.getElementById('about-container');
     const BUTTON_CLICKED = document.getElementById(info);
     //Clears the paragraph text if the header for the section you're already on is clicked.
     if (paragraphTitle == info) {
