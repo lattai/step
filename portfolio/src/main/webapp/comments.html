@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments - Leah Attai</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Permanent Marker" >
+    <script src="comments-script.js"></script>
+  </head>
+  <body onload = "getComments()">
+       <div id= "heading">
+        <div id = "rectangle">
+            <h1>Leah Attai</h1><h3 >Portfolio</h3>
+        </div>
+    </div>
+    <div id = "content">
+        </br>
+        <h1>Comment</h1>
+        <p id = "welcomeText">Hello! Leave me a comment</p>
+        <br>
+
+        <form action = "/comments" method = "POST">
+            <p>Message: </p>
+            <input type = "text" name = "comment">
+            </br>
+            <input type = "submit"/>
+        </form>
+        <div id = "comments-container" ></div>
+    </div>
+  </body>
+</html>

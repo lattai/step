@@ -75,7 +75,7 @@ function getData() {
         document.getElementById('data-container').innerText = quote;
     });
     fetch ('/data').then(response => response.json()).then((messages) => {
-        const messagesElement = document.getElementById('messasges-container');
+        const messagesElement = document.getElementById('messages-container');
         messagesElement.innerHTML = " ";
         messagesElement.appendChild(
             createListElement('Message 1: ' + messages[0]));
