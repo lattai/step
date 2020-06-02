@@ -17,15 +17,33 @@
  */
 
 function getComments() {
+    const responsePromise = fetch('/comments');
+    responsePromise.then(handleResponse);
+
     fetch('/comments').then(response => response.json()).then((comments) => {
         const commentsElement = document.getElementById('comments-container');
         commentsElement.innerHTML = " ";
         for (var i = 0; i < comments.length; i ++) {
         commentsElement.appendChild(
-            createListElement(comments[i]));
+            createListElement(comments[i].message));
         }
     });
 }
+
+function handleResponse(response) {
+    const JsonPromise = response.json();
+    JsonPromise.then(addCommentToDom);
+}
+
+function addCommentToDom(comments) {
+    const commentsElement = document.getElementById('comments-container');
+    commentsElement.innerHTML = " ";
+    for (var i = 0; i < comments.length; i ++) {
+        commentsElement.appendChild(
+        createListElement(comments[i].message));
+    }
+}
+
 // Makes each comment a list item
 function createListElement(text) {
     const liElement = document.createElement('li');
