@@ -27,7 +27,7 @@ import com.google.gson.Gson;
 
 @WebServlet("/comments")
 public final class CommentsServlet extends HttpServlet {
-    public ArrayList<String> comments = new ArrayList<>();
+    public ArrayList<Comment> comments = new ArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,13 +44,13 @@ public final class CommentsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //Get input from form
-        String comment = getComment(request);
+        Comment comment = getComment(request);
         comments.add(comment);
         //Redirect back to comments page
         response.sendRedirect("/comments.html");
     }
-    private String getComment(HttpServletRequest request) {
-        String comment = request.getParameter("comment");
+    private Comment getComment(HttpServletRequest request) {
+        Comment comment = new Comment(request.getParameter("comment"));
         return comment;
     }
 }
