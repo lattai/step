@@ -27,11 +27,15 @@ import com.google.gson.Gson;
 
 @WebServlet("/comments")
 public final class CommentsServlet extends HttpServlet {
+
+    private static final String APPLICATION_TYPE = "application/josn";
+    private static final String COMMENT_PARAMETER = "comment";
+    private static final String NAME_PARAMETER = "name";
     public ArrayList<Comment> comments = new ArrayList<>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/josn");
+        response.setContentType(APPLICATION_TYPE);
         response.getWriter().println(convertToJsonWithGSon(comments));
     }
   
@@ -50,7 +54,7 @@ public final class CommentsServlet extends HttpServlet {
         response.sendRedirect("/comments.html");
     }
     private Comment getComment(HttpServletRequest request) {
-        Comment comment = new Comment(request.getParameter("name"), request.getParameter("comment"));
+        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER));
         return comment;
     }
 }
