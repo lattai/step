@@ -19,15 +19,6 @@
 function getComments() {
     const responsePromise = fetch('/comments');
     responsePromise.then(handleResponse);
-
-    fetch('/comments').then(response => response.json()).then((comments) => {
-        const commentsElement = document.getElementById('comments-container');
-        commentsElement.innerHTML = " ";
-        for (var i = 0; i < comments.length; i ++) {
-        commentsElement.appendChild(
-            createListElement(comments[i].message));
-        }
-    });
 }
 
 function handleResponse(response) {
@@ -40,7 +31,7 @@ function addCommentToDom(comments) {
     commentsElement.innerHTML = " ";
     for (var i = 0; i < comments.length; i ++) {
         commentsElement.appendChild(
-        createListElement(comments[i].message));
+        createListElement(comments[i].name + " - " + comments[i].message));
     }
 }
 
