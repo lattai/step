@@ -23,14 +23,19 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 
 public class Comment {
+    private String name;
     private String message;
 
-    public Comment (String message){
+    public Comment (String name, String message){
+        this.name = name;
         this.message = message;
     }
 
     public String getMessage(){
         return message;
+    }
+    public String getName(){
+        return name;
     }
 
 }

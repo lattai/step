@@ -50,7 +50,7 @@ public final class CommentsServlet extends HttpServlet {
         response.sendRedirect("/comments.html");
     }
     private Comment getComment(HttpServletRequest request) {
-        Comment comment = new Comment(request.getParameter("comment"));
+        Comment comment = new Comment(request.getParameter("name"), request.getParameter("comment"));
         return comment;
     }
 }
