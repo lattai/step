@@ -16,28 +16,37 @@
  * Fetches the comments input and builds the UI into a list.
  */
 
+var row;
 function getComments() {
-    const responsePromise = fetch('/comments');
-    responsePromise.then(handleResponse);
+    const RESPONSE_PROMISE = fetch('/comments');
+    RESPONSE_PROMISE.then(handleResponse);
 }
 
 function handleResponse(response) {
-    const JsonPromise = response.json();
-    JsonPromise.then(addCommentToDom);
+    const JSON_PROMISE = response.json();
+    JSON_PROMISE.then(addCommentToDom);
 }
 
 function addCommentToDom(comments) {
-    const commentsElement = document.getElementById('comments-container');
-    commentsElement.innerHTML = " ";
+    const TABLE_ELEMENT = document.getElementById('comments-table');
+    TABLE_ELEMENT.innerHTML = '<tr><th>Name</th><th>Message</th></tr>';
     for (var i = 0; i < comments.length; i ++) {
-        commentsElement.appendChild(
-        createListElement(comments[i].name + " - " + comments[i].message));
+        row = createRowElement();
+        row.appendChild(createDataElement(comments[i].name));
+        row.appendChild(createDataElement(comments[i].message));
+        TABLE_ELEMENT.appendChild(row);
     }
 }
 
-// Makes each comment a list item
-function createListElement(text) {
-    const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+// Makes each comment a table data item
+function createDataElement(text) {
+    const tdElement = document.createElement('td');
+    tdElement.innerText = text;
+    return tdElement;
 }
+
+function createRowElement() {
+    const rowElement = document.createElement('tr');
+    return rowElement;
+}
+
