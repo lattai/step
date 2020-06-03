@@ -15,6 +15,12 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import com.google.gson.Gson;
+
 
 //Servlet that encapsulates the comments form
 
@@ -43,7 +50,7 @@ public final class CommentsServlet extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(messages);
         return json;
-  }
+    }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -54,7 +61,19 @@ public final class CommentsServlet extends HttpServlet {
         response.sendRedirect("/comments.html");
     }
     private Comment getComment(HttpServletRequest request) {
-        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER));
+        long timestamp = System.currentTimeMillis();
+        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp);
+        newEntity(comment);
         return comment;
     }
+    private void newEntity(Comment comment) {
+        Entity task = new Entity("Comment");
+        task.setProperty("name", comment.getName());
+        task.setProperty("message", comment.getMessage());
+        task.setProperty("timestamp", comment.getTimestamp());
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(task);
+    }
+    
+
 }

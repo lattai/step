@@ -18,7 +18,7 @@
 
 var row;
 function getComments() {
-    const responsePromise = fetch('/comments');
+    const responsePromise = fetch('/list-comments');
     responsePromise.then(handleResponse);
 }
 
@@ -37,6 +37,7 @@ function addCommentToDom(comments) {
         tableElement.appendChild(row);
     }
 }
+
 
 // Makes each comment a table data item
 function createDataElement(text) {
