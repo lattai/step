@@ -29,7 +29,7 @@ function handleResponse(response) {
 
 function addCommentToDom(comments) {
     const TABLE_ELEMENT = document.getElementById('comments-table');
-    TABLE_ELEMENT.innerHTML = '<tr><th>Name</th><th>Message</th></tr>';
+    TABLE_ELEMENT.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
     for (var i = 0; i < comments.length; i ++) {
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
