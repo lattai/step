@@ -18,8 +18,8 @@
 
 var row;
 function getComments() {
-    const RESPONSE_PROMISE = fetch('/comments');
-    RESPONSE_PROMISE.then(handleResponse);
+    const responsePromise = fetch('/comments');
+    responsePromise.then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -28,13 +28,13 @@ function handleResponse(response) {
 }
 
 function addCommentToDom(comments) {
-    const TABLE_ELEMENT = document.getElementById('comments-table');
-    TABLE_ELEMENT.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
+    const tableElement = document.getElementById('comments-table');
+    tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
     for (var i = 0; i < comments.length; i ++) {
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
-        TABLE_ELEMENT.appendChild(row);
+        tableElement.appendChild(row);
     }
 }
 
