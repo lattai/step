@@ -29,30 +29,56 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.util.stream.*;
+
 
 // To List comments
 @WebServlet("/list-comments")
 public class ListCommentsServlet extends HttpServlet {
 
+    private static final String APPLICATION_TYPE = "application/josn;";
+    private static final String COMMENT_PARAMETER = "comment";
+    private static final String NAME_PARAMETER = "name";
+    private static final String TIMESTAMP_PARAMETER = "timestamp";
+
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
-        Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+        Query query = new Query("Comment").addSort(TIMESTAMP_PARAMETER, SortDirection.DESCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-        
+
         ArrayList<Comment> comments = new ArrayList<>();
-        for (Entity entity : results.asIterable()) {
-            String name = (String) entity.getProperty("name");
-            String message = (String) entity.getProperty("message");
-            long timestamp = (long) entity.getProperty("timestamp");
 
-            Comment comment = new Comment (name, message, timestamp);
-            comments.add(comment);
+        
+        // Streams entities to iterate through
+        try {
+            Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
+            stream.forEach(entity -> {
+                Comment comment = newComment(entity);
+                comments.add(comment);
+            });
         }
-        Gson gson = new Gson();
-
-        response.setContentType("application");
-        response.getWriter().println(gson.toJson(comments));
+        catch (NullPointerException e) {
+            System.out.println("NullPointerException thrown");
+        }
+        response.setContentType(APPLICATION_TYPE);
+        response.getWriter().println(convertToJsonWithGSon(comments));
+    
     }
+
+    private Comment newComment(Entity entity){
+        String name = entity.getProperty(NAME_PARAMETER).toString();
+        String message = entity.getProperty(COMMENT_PARAMETER).toString();
+        long timestamp = (long) entity.getProperty(TIMESTAMP_PARAMETER);
+        Comment comment = new Comment (name, message, timestamp);
+        return comment;
+    }
+
+    private String convertToJsonWithGSon(ArrayList messages) {
+        Gson gson = new Gson();
+        String json = gson.toJson(messages);
+        return json;
+    }
+
 }
