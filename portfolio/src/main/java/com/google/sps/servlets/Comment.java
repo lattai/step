@@ -21,21 +21,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import com.google.gson.Gson;
+import java.time.Instant;
 
 public class Comment {
-    private String name;
-    private String message;
+    private final String name;
+    private final String message;
+    private final long timestamp;
 
-    public Comment (String name, String message){
+    public Comment (String name, String message, long timestamp){
         this.name = name;
         this.message = message;
+        this.timestamp = timestamp;
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return message;
     }
-    public String getName(){
+    public String getName() {
         return name;
+    }
+    public long getTimestamp() {
+        return timestamp;
     }
 
 }

@@ -17,8 +17,9 @@
  */
 
 var row;
+
 function getComments() {
-    const responsePromise = fetch('/comments');
+    const responsePromise = fetch('/list-comments');
     responsePromise.then(handleResponse);
 }
 
@@ -30,6 +31,7 @@ function handleResponse(response) {
 function addCommentToDom(comments) {
     const tableElement = document.getElementById('comments-table');
     tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
+    
     for (var i = 0; i < comments.length; i ++) {
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
@@ -49,4 +51,3 @@ function createRowElement() {
     const rowElement = document.createElement('tr');
     return rowElement;
 }
-
