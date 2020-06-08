@@ -17,7 +17,7 @@
  */
 
 var row;
-
+var commentsPerPage = 4;
 function getComments() {
     const responsePromise = fetch('/list-comments');
     responsePromise.then(handleResponse);
@@ -37,6 +37,9 @@ function addCommentToDom(comments) {
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
         tableElement.appendChild(row);
+        if (i == commentsPerPage && commentsPerPage >0){
+            break;
+        }
     }
 }
 
@@ -50,4 +53,9 @@ function createDataElement(text) {
 function createRowElement() {
     const rowElement = document.createElement('tr');
     return rowElement;
+}
+
+function changeCommentsPerPage(){
+    commentsPerPage = document.getElementById("comments-per-page").value -1;
+    getComments();
 }

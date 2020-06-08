@@ -18,6 +18,16 @@
         </br>
         <h1>Comment</h1>
         <p id = "welcomeText">Hello! Leave me a comment</p>
+        <div id = "commentSelect" >
+            <p id = "welcomeText">Comments per Page:   </p>
+            <select id = "comments-per-page" onchange="changeCommentsPerPage()"> 
+                <option type = "number" value="5">5
+                <option type = "number" value="10">10
+                <option type = "number" value="15">15
+                <option type = "number" value="20">20
+                <option type = "number" value="0">All
+            </select>
+        </div>
         <form action = "/new-comment" method = "POST">
             <p>Name: </p>
             <input type = "text" name = "name">

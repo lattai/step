@@ -48,9 +48,8 @@ public class ListCommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
-        ArrayList<Comment> comments = new ArrayList<>();
+         ArrayList<Comment> comments = new ArrayList<>();
 
-        
         // Streams entities to iterate through
         try {
             Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
