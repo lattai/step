@@ -20,6 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
 import com.google.gson.Gson;
 // import com.google.sps.data.Task;
 import java.io.IOException;
@@ -41,6 +44,7 @@ public class ListCommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
+    public int maxComments; 
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -48,7 +52,7 @@ public class ListCommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
-         ArrayList<Comment> comments = new ArrayList<>();
+        ArrayList<Comment> comments = new ArrayList<>();
 
         // Streams entities to iterate through
         try {
@@ -63,7 +67,6 @@ public class ListCommentsServlet extends HttpServlet {
         }
         response.setContentType(APPLICATION_TYPE);
         response.getWriter().println(convertToJsonWithGSon(comments));
-    
     }
 
     private Comment newComment(Entity entity){
