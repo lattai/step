@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.Key;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import java.time.Instant;
@@ -27,6 +28,7 @@ public class Comment {
     private final String name;
     private final String message;
     private final long timestamp;
+    public Key key;
 
     public Comment (String name, String message, long timestamp){
         this.name = name;
@@ -42,6 +44,9 @@ public class Comment {
     }
     public long getTimestamp() {
         return timestamp;
+    }
+    public Key getKey(){
+        return key;
     }
 
 }

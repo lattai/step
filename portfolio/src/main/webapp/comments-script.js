@@ -29,6 +29,10 @@ function handleResponse(response) {
 }
 
 function addCommentToDom(comments) {
+    if (getMaxComments() != null) {
+        commentsPerPage = getMaxComments();
+        console.log('MAX COMMENTS ' + maxComments);
+    }
     const tableElement = document.getElementById('comments-table');
     tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
     
@@ -37,7 +41,7 @@ function addCommentToDom(comments) {
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
         tableElement.appendChild(row);
-        if (i == commentsPerPage && commentsPerPage >0){
+        if (i == commentsPerPage){
             break;
         }
     }
@@ -55,7 +59,17 @@ function createRowElement() {
     return rowElement;
 }
 
-function changeCommentsPerPage(){
-    commentsPerPage = document.getElementById("comments-per-page").value -1;
+function changeMaxComments(){
+    commentsPerPage = document.getElementById("comments-per-page").value;
     getComments();
+}
+
+function getMaxComments (){
+    fetch('/new-comment')
+        .then(response => response.text())
+        .then(maxComments => {
+            console.log("ahha " + maxComments)
+            console.log("added " + parseInt(maxComments) + 1)
+           return parseInt(maxComments);
+        })
 }

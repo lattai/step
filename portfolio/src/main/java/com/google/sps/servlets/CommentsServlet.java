@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,6 +42,8 @@ public final class CommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
+    private static String maxComments;
+
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,16 +52,27 @@ public final class CommentsServlet extends HttpServlet {
         // Create an Entity
         Entity task = newEntity(comment);
         // Store Entity
-        storeEntity(task);
+        comment.key = storeEntity(task);
         //Redirect back to comments page
         response.sendRedirect("/comments.html");
+    }
+    
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;");
+        response.getWriter().println(maxComments);
     }
 
     private Comment newComment(HttpServletRequest request) {
         long timestamp = Instant.now().toEpochMilli();
+        maxComments = request.getParameter("comments-per-page");
+        System.out.println("COMMENTCOUNT " + maxComments);
         Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp);
         return comment;
     }
+
+    // private void storeComment (Comment comment) {
+    //     comments.add(comment);
+    // }
 
     private Entity newEntity(Comment comment) {
         Entity task = new Entity("Comment");
@@ -66,8 +82,10 @@ public final class CommentsServlet extends HttpServlet {
         return task;
     }
 
-    private void storeEntity (Entity task){
+    private Key storeEntity (Entity task) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(task);
+        Key key = datastore.put(task);
+        return key;
     }
+    
 }
