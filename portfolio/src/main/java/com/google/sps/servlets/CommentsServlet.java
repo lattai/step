@@ -42,7 +42,7 @@ public final class CommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
-    private static String maxComments;
+    public static String maxComments;
 
 
     @Override

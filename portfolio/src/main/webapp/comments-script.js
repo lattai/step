@@ -29,7 +29,6 @@ function handleResponse(response) {
 }
 
 function addCommentToDom(comments) {
-    getMaxComments();
     console.log("COMMENTSPP =" + commentsPerPage);
     const tableElement = document.getElementById('comments-table');
     tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
@@ -66,11 +65,18 @@ function getMaxComments (){
     fetch('/new-comment')
         .then(response => response.text())
         .then(maxComments => {
-            // if (maxComments != null){
-            // document.getElementById("comments-per-page").value = parseInt(maxComments);
-            console.log("MAX" + maxComments)
-            commentsPerPage = parseInt(maxComments)
-
-           
+            options = document.getElementById("comments-per-page").options;
+            console.log("OPT LENGTH " + options.length);
+            for (var i= 0, n= options.length; i < n ; i++) {
+                console.log("OPT I " + options[i].value);
+                if (parseInt(options[i].value) === parseInt(maxComments)) {
+                    document.getElementById("comments-per-page").selectedIndex = i;
+                    commentsPerPage = parseInt(maxComments);
+                    console.log("ENTERED I " + i);
+                }
+            }
+            
         })
+        .then(getComments());
+        
 }

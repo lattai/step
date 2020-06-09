@@ -44,7 +44,7 @@ public class ListCommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
-    public int maxComments; 
+    // public int maxComments; 
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,13 +53,14 @@ public class ListCommentsServlet extends HttpServlet {
         PreparedQuery results = datastore.prepare(query);
 
         ArrayList<Comment> comments = new ArrayList<>();
-
+        // int counter = 0;
         // Streams entities to iterate through
         try {
             Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
             stream.forEach(entity -> {
                 Comment comment = newComment(entity);
                 comments.add(comment);
+                // counter++;
             });
         }
         catch (NullPointerException e) {
