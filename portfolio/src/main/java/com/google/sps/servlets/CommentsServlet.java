@@ -57,6 +57,7 @@ public final class CommentsServlet extends HttpServlet {
         response.sendRedirect("/comments.html");
     }
     
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;");
         response.getWriter().println(maxComments);
