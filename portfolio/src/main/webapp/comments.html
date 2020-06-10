@@ -18,19 +18,33 @@
         </br>
         <h1>Comment</h1>
         <p id = "welcomeText">Hello! Leave me a comment</p>
+        
         <form action = "/new-comment" method = "POST">
+            <div id = "commentSelect" >
+                <p id = "welcomeText">Comments per Page:   </p>
+                <select id = "maxComments" name = "maxComments" onchange="changeMaxComments()"> 
+                    <option type = "number" value="4">5
+                    <option type = "number" value="9">10
+                    <option type = "number" value="14">15
+                    <option type = "number" value="19">20
+                    <option type = "number" value="-2">All
+                </select>
+                <button onclick="getComments()">Reload</button>
+            </div>
             <p>Name: </p>
             <input type = "text" name = "name">
             <p>Message: </p>
             <input type = "text" name = "comment">
             </br>
-            <input type = "submit"/>
+            <input type = "submit" onclick="getMaxComments()"/>
             </br>
         </form>
         <div id = "comments-container">
             <table id = "comments-table">
             </table>
         </div>
+        </br>
+        <button onclick ="deleteAllComments()"> Delete Comments </button>
     </div>
   </body>
 </html>

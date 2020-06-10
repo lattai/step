@@ -165,7 +165,7 @@ h1 {
 }
 table {
     width: 85vw;
-    max-width: 85%;
+    max-width: 70%;
     border-spacing: 0.5rem;
     table-layout:fixed;
 }
@@ -189,4 +189,9 @@ td:nth-child(1), #thName{
 
 td:nth-child(2), #thMessage {
     padding: 15px;
+}
+
+#commentSelect { 
+    display: flex;
+    justify-content: center;
 }

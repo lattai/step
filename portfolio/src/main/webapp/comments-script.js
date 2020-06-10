@@ -17,7 +17,8 @@
  */
 
 var row;
-
+var commentsPerPage = 4;
+var changedMaxComments = false;
 function getComments() {
     const responsePromise = fetch('/list-comments');
     responsePromise.then(handleResponse);
@@ -29,10 +30,21 @@ function handleResponse(response) {
 }
 
 function addCommentToDom(comments) {
+    
     const tableElement = document.getElementById('comments-table');
     tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
-    
-    for (var i = 0; i < comments.length; i ++) {
+
+    //Reassigns commentsPerPage from the last load only when a new comment is made
+    if (!changedMaxComments && comments.length > 0){
+        commentsPerPage = parseInt(comments[0].maxComments);
+        document.getElementById("maxComments").value = commentsPerPage;
+    }
+    if (commentsPerPage <= 0) {
+        commentsPerPage = comments.length;
+    }
+
+    for (var i = 0; i < commentsPerPage; i ++) {
+        console.log("COMMENTSPP After = " + commentsPerPage);
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
@@ -50,4 +62,25 @@ function createDataElement(text) {
 function createRowElement() {
     const rowElement = document.createElement('tr');
     return rowElement;
+}
+
+function changeMaxComments(){
+    commentsPerPage = document.getElementById("maxComments").value;
+    changedMaxComments = true;
+    getComments();
+}
+
+function getMaxComments (){
+    fetch('/new-comment')
+        .then(response => response.text())
+        .then(maxComments => {
+            options = document.getElementById("maxComments").options;
+            for (var i= 0, n= options.length; i < n ; i++) {
+                if (parseInt(options[i].value) === parseInt(maxComments)) {
+                    document.getElementById("maxComments").selectedIndex = i;
+                    commentsPerPage = parseInt(maxComments);
+                }
+            }
+        })
+        .then(getComments());
 }

@@ -21,6 +21,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,9 +39,15 @@ import java.time.Instant;
 public final class CommentsServlet extends HttpServlet {
 
     private static final String APPLICATION_TYPE = "application/josn;";
+    private static final String TEXT_TYPE = "text/html;";
+    private static final String COMMENTS_PAGE = "/comments.html";
+    private static final String COMMENT_STRING = "Comment";
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
+    private static final String MAX_COMMENTS_PARAMETER = "maxComments";
+    private static String maxComments;
+
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -47,27 +56,37 @@ public final class CommentsServlet extends HttpServlet {
         // Create an Entity
         Entity task = newEntity(comment);
         // Store Entity
-        storeEntity(task);
+        comment.setKey(storeEntity(task));
         //Redirect back to comments page
-        response.sendRedirect("/comments.html");
+        response.sendRedirect(COMMENTS_PAGE);
     }
+    
 
     private Comment newComment(HttpServletRequest request) {
         long timestamp = Instant.now().toEpochMilli();
-        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp);
+        maxComments = request.getParameter(MAX_COMMENTS_PARAMETER);
+        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
         return comment;
     }
 
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType(TEXT_TYPE);
+        response.getWriter().println(maxComments);
+    }
+
     private Entity newEntity(Comment comment) {
-        Entity task = new Entity("Comment");
+        Entity task = new Entity(COMMENT_STRING);
         task.setProperty(NAME_PARAMETER, comment.getName());
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
+        task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
         return task;
     }
 
-    private void storeEntity (Entity task){
+    private Key storeEntity (Entity task) {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        datastore.put(task);
+        Key key = datastore.put(task);
+        return key;
     }
 }

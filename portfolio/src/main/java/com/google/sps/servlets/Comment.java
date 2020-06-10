@@ -19,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.Key;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import java.time.Instant;
@@ -27,21 +28,42 @@ public class Comment {
     private final String name;
     private final String message;
     private final long timestamp;
+    private Key key;
+    private String maxComments;
 
-    public Comment (String name, String message, long timestamp){
+    public Comment (String name, String message, long timestamp, String maxComments){
         this.name = name;
         this.message = message;
         this.timestamp = timestamp;
+        this.maxComments = maxComments;
     }
 
     public String getMessage() {
         return message;
     }
+
     public String getName() {
         return name;
     }
+
     public long getTimestamp() {
         return timestamp;
+    }
+
+    public Key getKey(){
+        return key;
+    }
+
+    public String getMaxComments() {
+        return maxComments;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public void setMaxComments(String newMaxComments) {
+        maxComments = newMaxComments;
     }
 
 }
