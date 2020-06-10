@@ -54,18 +54,15 @@ public class ListCommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
         ArrayList<Comment> comments = new ArrayList<>();
-        // counter = 0;
         // Streams entities to iterate through
-        try {
-            Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
-            stream.forEach(entity -> {
+        
+        Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
+        stream.forEach(entity -> {
+            if (!entity.equals(null)){
                 Comment comment = newComment(entity);
-                comments.add(comment);
-            });
-        }
-        catch (NullPointerException e) {
-            System.out.println("NullPointerException thrown");
-        }
+                comments.add(comment);                
+            }
+        });
         response.setContentType(APPLICATION_TYPE);
         response.getWriter().println(convertToJsonWithGSon(comments));
     }

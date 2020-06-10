@@ -39,6 +39,9 @@ import java.time.Instant;
 public final class CommentsServlet extends HttpServlet {
 
     private static final String APPLICATION_TYPE = "application/josn;";
+    private static final String TEXT_TYPE = "text/html;";
+    private static final String COMMENTS_PAGE = "/comments.html";
+    private static final String COMMENT_STRING = "Comment";
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
@@ -53,28 +56,27 @@ public final class CommentsServlet extends HttpServlet {
         // Create an Entity
         Entity task = newEntity(comment);
         // Store Entity
-        comment.key = storeEntity(task);
+        comment.setKey(storeEntity(task));
         //Redirect back to comments page
-        response.sendRedirect("/comments.html");
+        response.sendRedirect(COMMENTS_PAGE);
     }
     
 
     private Comment newComment(HttpServletRequest request) {
         long timestamp = Instant.now().toEpochMilli();
         maxComments = request.getParameter(MAX_COMMENTS_PARAMETER);
-        System.out.println("COMMENTCOUNT " + maxComments);
         Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
         return comment;
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html;");
+        response.setContentType(TEXT_TYPE);
         response.getWriter().println(maxComments);
     }
 
     private Entity newEntity(Comment comment) {
-        Entity task = new Entity("Comment");
+        Entity task = new Entity(COMMENT_STRING);
         task.setProperty(NAME_PARAMETER, comment.getName());
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
@@ -87,5 +89,4 @@ public final class CommentsServlet extends HttpServlet {
         Key key = datastore.put(task);
         return key;
     }
-    
 }

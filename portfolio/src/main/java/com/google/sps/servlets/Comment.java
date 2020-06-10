@@ -28,8 +28,8 @@ public class Comment {
     private final String name;
     private final String message;
     private final long timestamp;
-    public Key key;
-    public String maxComments;
+    private Key key;
+    private String maxComments;
 
     public Comment (String name, String message, long timestamp, String maxComments){
         this.name = name;
@@ -41,17 +41,29 @@ public class Comment {
     public String getMessage() {
         return message;
     }
+
     public String getName() {
         return name;
     }
+
     public long getTimestamp() {
         return timestamp;
     }
+
     public Key getKey(){
         return key;
     }
+
     public String getMaxComments() {
         return maxComments;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public void setMaxComments(String newMaxComments) {
+        maxComments = newMaxComments;
     }
 
 }

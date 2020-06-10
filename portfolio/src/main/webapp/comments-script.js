@@ -39,16 +39,16 @@ function addCommentToDom(comments) {
         commentsPerPage = parseInt(comments[0].maxComments);
         document.getElementById("maxComments").value = commentsPerPage;
     }
+    if (commentsPerPage <= 0) {
+        commentsPerPage = comments.length;
+    }
 
-    for (var i = 0; i < comments.length; i ++) {
+    for (var i = 0; i < commentsPerPage; i ++) {
         console.log("COMMENTSPP After = " + commentsPerPage);
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
         tableElement.appendChild(row);
-        if (i == commentsPerPage){
-            break;
-        }
     }
 }
 
@@ -75,14 +75,10 @@ function getMaxComments (){
         .then(response => response.text())
         .then(maxComments => {
             options = document.getElementById("maxComments").options;
-            console.log("OPT LENGTH " + options.length);
             for (var i= 0, n= options.length; i < n ; i++) {
-                console.log("OPT I " + options[i].value);
                 if (parseInt(options[i].value) === parseInt(maxComments)) {
                     document.getElementById("maxComments").selectedIndex = i;
                     commentsPerPage = parseInt(maxComments);
-                    console.log("ENTERED I " + i);
-                    console.log("NEW CPP " + commentsPerPage);
                 }
             }
         })
