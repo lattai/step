@@ -18,6 +18,7 @@
 
 var row;
 var commentsPerPage = 4;
+var changedMaxComments = false;
 function getComments() {
     const responsePromise = fetch('/list-comments');
     responsePromise.then(handleResponse);
@@ -29,11 +30,18 @@ function handleResponse(response) {
 }
 
 function addCommentToDom(comments) {
-    console.log("COMMENTSPP =" + commentsPerPage);
+    
     const tableElement = document.getElementById('comments-table');
     tableElement.innerHTML = '<tr><th id = "thName">Name</th><th id = "thMessage">Message</th></tr>';
-    
+
+    //Reassigns commentsPerPage from the last load only when a new comment is made
+    if (!changedMaxComments && comments.length > 0){
+        commentsPerPage = parseInt(comments[0].maxComments);
+        document.getElementById("maxComments").value = commentsPerPage;
+    }
+
     for (var i = 0; i < comments.length; i ++) {
+        console.log("COMMENTSPP After = " + commentsPerPage);
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
@@ -57,7 +65,8 @@ function createRowElement() {
 }
 
 function changeMaxComments(){
-    commentsPerPage = document.getElementById("comments-per-page").value;
+    commentsPerPage = document.getElementById("maxComments").value;
+    changedMaxComments = true;
     getComments();
 }
 
@@ -65,18 +74,17 @@ function getMaxComments (){
     fetch('/new-comment')
         .then(response => response.text())
         .then(maxComments => {
-            options = document.getElementById("comments-per-page").options;
+            options = document.getElementById("maxComments").options;
             console.log("OPT LENGTH " + options.length);
             for (var i= 0, n= options.length; i < n ; i++) {
                 console.log("OPT I " + options[i].value);
                 if (parseInt(options[i].value) === parseInt(maxComments)) {
-                    document.getElementById("comments-per-page").selectedIndex = i;
+                    document.getElementById("maxComments").selectedIndex = i;
                     commentsPerPage = parseInt(maxComments);
                     console.log("ENTERED I " + i);
+                    console.log("NEW CPP " + commentsPerPage);
                 }
             }
-            
         })
         .then(getComments());
-        
 }

@@ -29,11 +29,13 @@ public class Comment {
     private final String message;
     private final long timestamp;
     public Key key;
+    public String maxComments;
 
-    public Comment (String name, String message, long timestamp){
+    public Comment (String name, String message, long timestamp, String maxComments){
         this.name = name;
         this.message = message;
         this.timestamp = timestamp;
+        this.maxComments = maxComments;
     }
 
     public String getMessage() {
@@ -47,6 +49,9 @@ public class Comment {
     }
     public Key getKey(){
         return key;
+    }
+    public String getMaxComments() {
+        return maxComments;
     }
 
 }

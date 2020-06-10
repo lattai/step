@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import com.google.gson.Gson;
+import java.time.Instant;
 import java.util.stream.*;
 
 
@@ -44,23 +46,21 @@ public class ListCommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
-    // public int maxComments; 
+    private static final String MAX_COMMENTS_PARAMETER = "maxComments";
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response) throws IOException {
         Query query = new Query("Comment").addSort(TIMESTAMP_PARAMETER, SortDirection.DESCENDING);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-
         ArrayList<Comment> comments = new ArrayList<>();
-        // int counter = 0;
+        // counter = 0;
         // Streams entities to iterate through
         try {
             Stream<Entity> stream = StreamSupport.stream(results.asIterable().spliterator(), false);
             stream.forEach(entity -> {
                 Comment comment = newComment(entity);
                 comments.add(comment);
-                // counter++;
             });
         }
         catch (NullPointerException e) {
@@ -74,7 +74,8 @@ public class ListCommentsServlet extends HttpServlet {
         String name = entity.getProperty(NAME_PARAMETER).toString();
         String message = entity.getProperty(COMMENT_PARAMETER).toString();
         long timestamp = (long) entity.getProperty(TIMESTAMP_PARAMETER);
-        Comment comment = new Comment (name, message, timestamp);
+        String maxComments = entity.getProperty(MAX_COMMENTS_PARAMETER).toString();
+        Comment comment = new Comment (name, message, timestamp, maxComments);
         return comment;
     }
 

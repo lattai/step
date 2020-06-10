@@ -42,7 +42,8 @@ public final class CommentsServlet extends HttpServlet {
     private static final String COMMENT_PARAMETER = "comment";
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
-    public static String maxComments;
+    private static final String MAX_COMMENTS_PARAMETER = "maxComments";
+    private static String maxComments;
 
 
     @Override
@@ -57,29 +58,27 @@ public final class CommentsServlet extends HttpServlet {
         response.sendRedirect("/comments.html");
     }
     
+
+    private Comment newComment(HttpServletRequest request) {
+        long timestamp = Instant.now().toEpochMilli();
+        maxComments = request.getParameter(MAX_COMMENTS_PARAMETER);
+        System.out.println("COMMENTCOUNT " + maxComments);
+        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
+        return comment;
+    }
+
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html;");
         response.getWriter().println(maxComments);
     }
 
-    private Comment newComment(HttpServletRequest request) {
-        long timestamp = Instant.now().toEpochMilli();
-        maxComments = request.getParameter("comments-per-page");
-        System.out.println("COMMENTCOUNT " + maxComments);
-        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp);
-        return comment;
-    }
-
-    // private void storeComment (Comment comment) {
-    //     comments.add(comment);
-    // }
-
     private Entity newEntity(Comment comment) {
         Entity task = new Entity("Comment");
         task.setProperty(NAME_PARAMETER, comment.getName());
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
+        task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
         return task;
     }
 
