@@ -46,6 +46,7 @@ public final class CommentsServlet extends HttpServlet {
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
     private static final String MAX_COMMENTS_PARAMETER = "maxComments";
+    private static final String ID_PARAMETER = "id";
     private static String maxComments;
 
 
@@ -57,6 +58,7 @@ public final class CommentsServlet extends HttpServlet {
         Entity task = newEntity(comment);
         // Store Entity
         comment.setKey(storeEntity(task));
+        comment.setId(task.getKey().getId());
         //Redirect back to comments page
         response.sendRedirect(COMMENTS_PAGE);
     }
@@ -81,6 +83,7 @@ public final class CommentsServlet extends HttpServlet {
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
         task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
+        task.setProperty(ID_PARAMETER, comment.getId());
         return task;
     }
 

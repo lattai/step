@@ -60,6 +60,7 @@ public class ListCommentsServlet extends HttpServlet {
         stream.forEach(entity -> {
             if (!entity.equals(null)){
                 Comment comment = newComment(entity);
+                comment.setId(entity.getKey().getId());
                 comments.add(comment);                
             }
         });
