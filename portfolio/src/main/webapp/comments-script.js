@@ -48,6 +48,7 @@ function addCommentToDom(comments) {
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
+        row.appendChild(createcommentDeleteButton(comments[i]));
         tableElement.appendChild(row);
     }
 }
@@ -83,4 +84,20 @@ function getMaxComments (){
             }
         })
         .then(getComments());
+}
+
+function createcommentDeleteButton(comment) {
+    const commentDeleteButton = document.createElement('button');
+    commentDeleteButton.innerText = 'Delete';
+    commentDeleteButton.addEventListener('click', () => {
+        deleteComment(comment);
+    });
+    return commentDeleteButton
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-comment', {method: 'POST', body: params});
+  getComments();
 }

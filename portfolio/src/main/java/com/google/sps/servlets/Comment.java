@@ -29,6 +29,7 @@ public class Comment {
     private final String message;
     private final long timestamp;
     private Key key;
+    private long id;
     private String maxComments;
 
     public Comment (String name, String message, long timestamp, String maxComments){
@@ -54,6 +55,10 @@ public class Comment {
         return key;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getMaxComments() {
         return maxComments;
     }
@@ -66,4 +71,7 @@ public class Comment {
         maxComments = newMaxComments;
     }
 
+    public void setId(long newId) {
+        id = newId;
+    }
 }
