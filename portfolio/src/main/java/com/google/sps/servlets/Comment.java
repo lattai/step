@@ -55,7 +55,7 @@ public class Comment {
         return key;
     }
 
-    public long getId(){
+    public long getId() {
         return id;
     }
 

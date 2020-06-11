@@ -48,7 +48,7 @@ function addCommentToDom(comments) {
         row = createRowElement();
         row.appendChild(createDataElement(comments[i].name));
         row.appendChild(createDataElement(comments[i].message));
-        row.appendChild(createDeleteButton(comments[i]));
+        row.appendChild(createcommentDeleteButton(comments[i]));
         tableElement.appendChild(row);
     }
 }
@@ -86,13 +86,13 @@ function getMaxComments (){
         .then(getComments());
 }
 
-function createDeleteButton(comment) {
-    const deleteButton = document.createElement('button');
-    deleteButton.innerText = 'Delete';
-    deleteButton.addEventListener('click', () => {
+function createcommentDeleteButton(comment) {
+    const commentDeleteButton = document.createElement('button');
+    commentDeleteButton.innerText = 'Delete';
+    commentDeleteButton.addEventListener('click', () => {
         deleteComment(comment);
     });
-    return deleteButton
+    return commentDeleteButton
 }
 
 function deleteComment(comment) {

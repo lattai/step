@@ -40,13 +40,14 @@ import java.util.stream.*;
 
 public class DeleteCommentServlet extends HttpServlet {
 
-    private static String maxComments;
+    private static final String ID_PARAMETER = "id";
+    private static final String COMMENT_PARAMETER = "Comment";
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    long id = Long.parseLong(request.getParameter("id"));
+    long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
-    Key taskEntityKey = KeyFactory.createKey("Comment", id);
+    Key taskEntityKey = KeyFactory.createKey(COMMENT_PARAMETER, id);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.delete(taskEntityKey);
   }
