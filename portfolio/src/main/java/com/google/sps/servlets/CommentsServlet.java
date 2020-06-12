@@ -21,6 +21,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyRange;
@@ -46,19 +48,26 @@ public final class CommentsServlet extends HttpServlet {
     private static final String NAME_PARAMETER = "name";
     private static final String TIMESTAMP_PARAMETER = "timestamp";
     private static final String MAX_COMMENTS_PARAMETER = "maxComments";
+    private static final String EMAIL_PARAMETER = "email";
     private static final String ID_PARAMETER = "id";
     private static String maxComments;
+    private static final UserService userService = UserServiceFactory.getUserService();
 
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Check if user is logged in before making comment
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect("/login.html");
+            return;
+        }
         //Create new Comment from input from form
         Comment comment = newComment(request); 
         // Create an Entity
         Entity task = newEntity(comment);
         // Store Entity
-        comment.setKey(storeEntity(task));
         comment.setId(task.getKey().getId());
+        comment.setKey(storeEntity(task));
         //Redirect back to comments page
         response.sendRedirect(COMMENTS_PAGE);
     }
@@ -68,6 +77,8 @@ public final class CommentsServlet extends HttpServlet {
         long timestamp = Instant.now().toEpochMilli();
         maxComments = request.getParameter(MAX_COMMENTS_PARAMETER);
         Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
+        comment.setEmail(userService.getCurrentUser().getEmail());
+        comment.setName(userService.getCurrentUser().getNickname());
         return comment;
     }
 
@@ -84,6 +95,7 @@ public final class CommentsServlet extends HttpServlet {
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
         task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
         task.setProperty(ID_PARAMETER, comment.getId());
+        task.setProperty(EMAIL_PARAMETER, comment.getEmail());
         return task;
     }
 

@@ -25,12 +25,13 @@ import com.google.gson.Gson;
 import java.time.Instant;
 
 public class Comment {
-    private final String name;
+    private  String name;
     private final String message;
     private final long timestamp;
     private Key key;
     private long id;
     private String maxComments;
+    private String email;
 
     public Comment (String name, String message, long timestamp, String maxComments){
         this.name = name;
@@ -63,8 +64,16 @@ public class Comment {
         return maxComments;
     }
 
-    public void setKey(Key key) {
-        this.key = key;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public void setKey(Key newKey) {
+        key = newKey;
     }
 
     public void setMaxComments(String newMaxComments) {
@@ -73,5 +82,9 @@ public class Comment {
 
     public void setId(long newId) {
         id = newId;
+    }
+
+    public void setEmail(String newEmail) {
+        email = newEmail;
     }
 }

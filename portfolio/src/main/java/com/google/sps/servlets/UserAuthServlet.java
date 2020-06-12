@@ -37,24 +37,34 @@ public class UserAuthServlet extends HttpServlet {
     private static final String TEXT_CONTENT_TYPE = "text/html";
     private static final String LOGIN_URL = "/login.html";
     private static final String INDEX_REDIRECT = "/";
+    private static final String TIMESTAMP_PARAMETER = "timestamp";
     private static UserService userService = UserServiceFactory.getUserService();
     private static String logoutUrl = userService.createLogoutURL(LOGIN_URL);
     private static String loginUrl = userService.createLoginURL(INDEX_REDIRECT);
+    
 
   @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        
         response.setContentType(TEXT_CONTENT_TYPE);
         response.getWriter().println(getWelcome());
         response.getWriter().println(getLoginLogoutLink());
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("Comment").addSort("TIMESTAMP_PARAMETER", SortDirection.DESCENDING);
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+            String text = (String) entity.getProperty("text");
+            String email = (String) entity.getProperty("email");
+
+        }
     }
 
     public String getWelcome() {
-        String userEmail = "stranger";
+        String userNickname = "stranger";
         if (userService.isUserLoggedIn()) {
-            userEmail = userService.getCurrentUser().getEmail();
+            userNickname = userService.getCurrentUser().getNickname();
         }
-        return ("<p>Hello " + userEmail + "!</p>");
+        return ("<p>Hello " + userNickname + "!</p>");
     }
 
     public String getLoginLogoutLink() {
