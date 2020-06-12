@@ -51,7 +51,7 @@ public class UserAuthServlet extends HttpServlet {
 
     public String getWelcome() {
         String userEmail = "stranger";
-        if (userService.isUserLoggedIn) {
+        if (userService.isUserLoggedIn()) {
             userEmail = userService.getCurrentUser().getEmail();
         }
         return ("<p>Hello " + userEmail + "!</p>");
@@ -59,9 +59,10 @@ public class UserAuthServlet extends HttpServlet {
 
     public String getLoginLogoutLink() {
         String link = "<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>";
-        if (userService.isUserLoggedIn) {
+        if (userService.isUserLoggedIn()) {
             link = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>";
         }
+        return link;
     }
 
 }
