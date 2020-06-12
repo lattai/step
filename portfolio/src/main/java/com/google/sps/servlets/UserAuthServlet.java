@@ -14,6 +14,15 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.KeyRange;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
@@ -28,26 +37,30 @@ public class UserAuthServlet extends HttpServlet {
     private static final String TEXT_CONTENT_TYPE = "text/html";
     private static final String LOGIN_URL = "/login.html";
     private static final String INDEX_REDIRECT = "/";
+    private static UserService userService = UserServiceFactory.getUserService();
+    private static String logoutUrl = userService.createLogoutURL(LOGIN_URL);
+    private static String loginUrl = userService.createLoginURL(INDEX_REDIRECT);
 
   @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        
         response.setContentType(TEXT_CONTENT_TYPE);
+        response.getWriter().println(getWelcome());
+        response.getWriter().println(getLoginLogoutLink());
+    }
 
-        UserService userService = UserServiceFactory.getUserService();
-        if (userService.isUserLoggedIn()) {
-            String userEmail = userService.getCurrentUser().getEmail();
-            String urlToRedirectToAfterUserLogsOut = LOGIN_URL;
-            String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
+    public String getWelcome() {
+        String userEmail = "stranger";
+        if (userService.isUserLoggedIn) {
+            userEmail = userService.getCurrentUser().getEmail();
+        }
+        return ("<p>Hello " + userEmail + "!</p>");
+    }
 
-            response.getWriter().println("<p>Hello " + userEmail + "!</p>");
-            response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
-        } 
-        else {
-            String urlToRedirectToAfterUserLogsIn = INDEX_REDIRECT;
-            String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-
-            response.getWriter().println("<p>Hello stranger!</p>");
-            response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+    public String getLoginLogoutLink() {
+        String link = "<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>";
+        if (userService.isUserLoggedIn) {
+            link = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>";
         }
     }
 
