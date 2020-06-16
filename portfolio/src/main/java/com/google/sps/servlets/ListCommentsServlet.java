@@ -82,5 +82,4 @@ public class ListCommentsServlet extends HttpServlet {
         String json = gson.toJson(messages);
         return json;
     }
-
 }

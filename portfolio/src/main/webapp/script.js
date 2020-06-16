@@ -69,26 +69,9 @@ function openTab(info) {
     }
 }
 
-// Fetch DataServlet.java content
-function getData() {
-    fetch ('/data').then(response => response.text()).then((quote) => {
-        document.getElementById('data-container').innerText = quote;
+// Fetch WelcomeServlet.java content, changes greeting with user's nickname
+function getGreeting() {
+    fetch ('/welcome').then(response => response.text()).then((quote) => {
+        document.getElementById('greeting').innerHTML = quote;
     });
-    fetch ('/data').then(response => response.json()).then((messages) => {
-        const messagesElement = document.getElementById('messages-container');
-        messagesElement.innerHTML = " ";
-        messagesElement.appendChild(
-            createListElement('Message 1: ' + messages[0]));
-        messagesElement.appendChild(
-            createListElement('Message 2: ' + messages[1]));
-        messagesElement.appendChild(
-            createListElement('Message 3: ' + messages[2]));
-        console.log("changed");
-    });
-}
-// Creates list of mesages
-function createListElement(text) {
-    const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
 }
