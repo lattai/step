@@ -42,7 +42,10 @@ public class UserAuthServlet extends HttpServlet {
     private static final String EMAIL_PARAMETER = "email";   
     private static final String ID_PARAMETER = "id"; 
     private static final String USER_PARAMETER = "User";   
-    private static final String SITEUSER_PARAMETER = "SiteUser";     
+    private static final String SITEUSER_PARAMETER = "SiteUser";
+    private static final String AT = "@";  
+    private static final String DEFAULT_NAME = "stranger";
+    private static final String NICKNAME_INPUT = "<form method=\"POST\" action=\"/login\">Choose a username<input type = \"text\" name = \"nickname\"><input type = \"submit\" onclick=\"changeNickname()\"/></form>";   
     private static UserService userService = UserServiceFactory.getUserService();
     private static String logoutUrl = userService.createLogoutURL(LOGIN_URL);
     private static String loginUrl = userService.createLoginURL(INDEX_REDIRECT);
@@ -56,11 +59,11 @@ public class UserAuthServlet extends HttpServlet {
     }
 
     public String getWelcome() {
-        String userNickname = "stranger";
+        String userNickname = DEFAULT_NAME;
         if (userService.isUserLoggedIn()) {
             userNickname = userService.getCurrentUser().getNickname();
-            if (userNickname.contains("@")){
-                return("<form method=\"POST\" action=\"/login\">Choose a username<input type = \"text\" name = \"nickname\"><input type = \"submit\" onclick=\"changeNickname()\"/></form>");
+            if (userNickname.contains(AT)){
+                return(NICKNAME_INPUT);
             }
         }
         return ("<p>Hello " + userNickname + "!</p>");

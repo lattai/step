@@ -53,9 +53,9 @@ public final class CommentsServlet extends HttpServlet {
     private static final String EMAIL_PARAMETER = "email";
     private static final String ID_PARAMETER = "id";
     private static final String NICKNAME_PARAMETER = "nickname";
+    private static final UserService USER_SERVICE = UserServiceFactory.getUserService();
+    private static final User USER = userService.getCurrentUser();
     private static String maxComments;
-    private static final UserService userService = UserServiceFactory.getUserService();
-    private static final User user = userService.getCurrentUser();
 
 
     @Override
@@ -93,7 +93,7 @@ public final class CommentsServlet extends HttpServlet {
 
     private Entity newEntity(Comment comment) {
         Entity task = new Entity(COMMENT_STRING);
-        task.setProperty(NAME_PARAMETER,comment.getName());
+        task.setProperty(NAME_PARAMETER, comment.getName());
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
         task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
