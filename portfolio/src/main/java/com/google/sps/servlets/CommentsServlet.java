@@ -23,6 +23,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyRange;
@@ -34,6 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import com.google.gson.Gson;
 import java.time.Instant;
+import java.util.stream.*;
 
 //Servlet that creates a new comment
 
@@ -50,8 +52,10 @@ public final class CommentsServlet extends HttpServlet {
     private static final String MAX_COMMENTS_PARAMETER = "maxComments";
     private static final String EMAIL_PARAMETER = "email";
     private static final String ID_PARAMETER = "id";
+    private static final String NICKNAME_PARAMETER = "nickname";
     private static String maxComments;
     private static final UserService userService = UserServiceFactory.getUserService();
+    private static final User user = userService.getCurrentUser();
 
 
     @Override
@@ -76,9 +80,8 @@ public final class CommentsServlet extends HttpServlet {
     private Comment newComment(HttpServletRequest request) {
         long timestamp = Instant.now().toEpochMilli();
         maxComments = request.getParameter(MAX_COMMENTS_PARAMETER);
-        Comment comment = new Comment(request.getParameter(NAME_PARAMETER), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
-        comment.setEmail(userService.getCurrentUser().getEmail());
-        comment.setName(userService.getCurrentUser().getNickname());
+        Comment comment = new Comment(getUserNickname(user.getEmail()), request.getParameter(COMMENT_PARAMETER), timestamp, maxComments);
+        comment.setEmail(user.getEmail());
         return comment;
     }
 
@@ -90,7 +93,7 @@ public final class CommentsServlet extends HttpServlet {
 
     private Entity newEntity(Comment comment) {
         Entity task = new Entity(COMMENT_STRING);
-        task.setProperty(NAME_PARAMETER, comment.getName());
+        task.setProperty(NAME_PARAMETER,comment.getName());
         task.setProperty(COMMENT_PARAMETER, comment.getMessage());
         task.setProperty(TIMESTAMP_PARAMETER, comment.getTimestamp());
         task.setProperty(MAX_COMMENTS_PARAMETER, maxComments);
@@ -103,5 +106,19 @@ public final class CommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Key key = datastore.put(task);
         return key;
+    }
+
+    private String getUserNickname(String email) {
+        // Takes in the email of the current user, compares it to emails in database to find the corresponding nickname
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query = new Query("SiteUser").setFilter(new Query.FilterPredicate(ID_PARAMETER, Query.FilterOperator.EQUAL, user.getUserId()));
+        PreparedQuery results = datastore.prepare(query);
+        String nickname = "";
+        for (Entity entity : results.asIterable()){
+            if (email.equals(entity.getProperty(EMAIL_PARAMETER).toString())){
+                nickname = entity.getProperty(NICKNAME_PARAMETER).toString();
+            }
+        }
+        return nickname;
     }
 }

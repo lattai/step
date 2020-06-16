@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 import java.time.Instant;
 
 public class Comment {
-    private  String name;
+    private String name;
     private final String message;
     private final long timestamp;
     private Key key;

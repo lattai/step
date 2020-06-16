@@ -24,6 +24,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.KeyRange;
 import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +38,11 @@ public class UserAuthServlet extends HttpServlet {
     private static final String TEXT_CONTENT_TYPE = "text/html";
     private static final String LOGIN_URL = "/login.html";
     private static final String INDEX_REDIRECT = "/";
-    private static final String TIMESTAMP_PARAMETER = "timestamp";
+    private static final String NICKNAME_PARAMETER = "nickname";
+    private static final String EMAIL_PARAMETER = "email";   
+    private static final String ID_PARAMETER = "id"; 
+    private static final String USER_PARAMETER = "User";   
+    private static final String SITEUSER_PARAMETER = "SiteUser";     
     private static UserService userService = UserServiceFactory.getUserService();
     private static String logoutUrl = userService.createLogoutURL(LOGIN_URL);
     private static String loginUrl = userService.createLoginURL(INDEX_REDIRECT);
@@ -48,21 +53,15 @@ public class UserAuthServlet extends HttpServlet {
         response.setContentType(TEXT_CONTENT_TYPE);
         response.getWriter().println(getWelcome());
         response.getWriter().println(getLoginLogoutLink());
-
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query = new Query("Comment").addSort("TIMESTAMP_PARAMETER", SortDirection.DESCENDING);
-        PreparedQuery results = datastore.prepare(query);
-        for (Entity entity : results.asIterable()) {
-            String text = (String) entity.getProperty("text");
-            String email = (String) entity.getProperty("email");
-
-        }
     }
 
     public String getWelcome() {
         String userNickname = "stranger";
         if (userService.isUserLoggedIn()) {
             userNickname = userService.getCurrentUser().getNickname();
+            if (userNickname.contains("@")){
+                return("<form method=\"POST\" action=\"/login\">Choose a username<input type = \"text\" name = \"nickname\"><input type = \"submit\" onclick=\"changeNickname()\"/></form>");
+            }
         }
         return ("<p>Hello " + userNickname + "!</p>");
     }
@@ -75,4 +74,31 @@ public class UserAuthServlet extends HttpServlet {
         return link;
     }
 
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserService userService = UserServiceFactory.getUserService();
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect(LOGIN_URL);
+            return;
+        }
+
+        String nickname = request.getParameter(NICKNAME_PARAMETER);
+        String id = userService.getCurrentUser().getUserId();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+
+        // Creates new entity for user
+        Entity entity = newEntity(userService.getCurrentUser(), nickname, id);
+
+        // Stores entity
+        datastore.put(entity);
+        response.sendRedirect(INDEX_REDIRECT);
+    }
+
+    private Entity newEntity(User user, String nickname, String id) {
+        Entity task = new Entity(SITEUSER_PARAMETER);
+        task.setProperty(NICKNAME_PARAMETER, nickname);
+        task.setProperty(ID_PARAMETER, id);
+        task.setProperty(EMAIL_PARAMETER, user.getEmail());
+        return task;
+    }
 }

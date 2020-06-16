@@ -22,3 +22,4 @@ function login() {
         document.getElementById("content").innerHTML = authInfo;
     });
 }
+
