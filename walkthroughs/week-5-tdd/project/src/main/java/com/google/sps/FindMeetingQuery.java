@@ -27,12 +27,13 @@ public final class FindMeetingQuery {
         Collection<TimeRange> avaliableTimes = new ArrayList<>();
         long duration = request.getDuration();
         Collection<String> attendees = request.getAttendees();
+        Collection<String> optionalAttendees = request.getOptionalAttendees();
 
         // Edge Cases
         if (duration >= TimeRange.WHOLE_DAY.duration()) {
             return avaliableTimes;
         }
-        else if (attendees.isEmpty() || events.isEmpty()){
+        else if ((attendees.isEmpty() && optionalAttendees.isEmpty()) || events.isEmpty()){
             avaliableTimes.add(TimeRange.WHOLE_DAY);
             return avaliableTimes;
         }
@@ -40,22 +41,30 @@ public final class FindMeetingQuery {
         // Get Collection of unavaliableTimes times
         Collection<TimeRange> unavaliableTimes = getUnavaliableTimes(events, attendees);
         // Sort Unavaliable times by start time
-        List<TimeRange> unavTimesList = unavaliableTimes.stream().sorted(TimeRange.ORDER_BY_START).collect(Collectors.toList());
+        List<TimeRange> unavaliableTimesList = unavaliableTimes.stream().sorted(TimeRange.ORDER_BY_START).collect(Collectors.toList());
         // Create Avaliable times
-        avaliableTimes = generateAvaliableTimes(unavTimesList, duration);
+        avaliableTimes = generateAvaliableTimes(unavaliableTimesList, duration);
+
+        // If no conflicting times for attendees, check optional attendees
+        if (avaliableTimes.equals(TimeRange.WHOLE_DAY)){
+            unavaliableTimes = getUnavaliableTimes(events, optionalAttendees);
+            unavaliableTimesList = unavaliableTimes.stream().sorted(TimeRange.ORDER_BY_START).collect(Collectors.toList());
+            avaliableTimes = generateAvaliableTimes(unavaliableTimesList, duration);
+        }
         return avaliableTimes;
     }
 
     public Collection<TimeRange> getUnavaliableTimes(Collection<Event> events, Collection<String> attendees) {
         Collection<TimeRange> badTimes = new ArrayList<>();
-        int i; // Used to ensure only one attendee has to attend another event to make the time unavaliable
+        // Used to ensure only one attendee has to attend another event to make the time unavaliable
+        boolean isAnAttendeeAtThisEvent;
         for (Event event : events){
             Set<String> eventAttendees = event.getAttendees();
-            i = 0;
+            isAnAttendeeAtThisEvent = false;
             for (String attendee : attendees){
-                if (eventAttendees.contains(attendee) && i == 0){
+                if (eventAttendees.contains(attendee) && !isAnAttendeeAtThisEvent){
                     badTimes.add(event.getWhen());
-                    i = 1;
+                    isAnAttendeeAtThisEvent = true;
                 }
             }
         }
@@ -63,24 +72,24 @@ public final class FindMeetingQuery {
     }
 
     public Collection<TimeRange> generateAvaliableTimes(List<TimeRange> unavaliableTimes, long duration) {
-        Collection<TimeRange> avTimes = new ArrayList<>();
-        TimeRange avTime = TimeRange.WHOLE_DAY;
-        for (TimeRange unAvTime : unavaliableTimes){
-            if (unAvTime.overlaps(avTime)) {
+        Collection<TimeRange> avaliableTimesList = new ArrayList<>();
+        TimeRange avaliableTimeRange = TimeRange.WHOLE_DAY;
+        for (TimeRange unavaliableTimeRange : unavaliableTimes){
+            if (unavaliableTimeRange.overlaps(avaliableTimeRange)) {
                 // Create new Time for av Times
-                TimeRange newTime = TimeRange.fromStartEnd(avTime.start(), unAvTime.start(), false); 
+                TimeRange newTime = TimeRange.fromStartEnd(avaliableTimeRange.start(), unavaliableTimeRange.start(), /* inclusive of end= */ false); 
                 if (compareDuration(newTime, duration)){
-                    // Add new time to avTimes
-                    avTimes.add(newTime);
+                    // Add new time to avaliableTimesList
+                    avaliableTimesList.add(newTime);
                 }
-                avTime = TimeRange.fromStartEnd(unAvTime.end(), TimeRange.END_OF_DAY, true);
+                avaliableTimeRange = TimeRange.fromStartEnd(unavaliableTimeRange.end(), TimeRange.END_OF_DAY, /* inclusive of end= */ true);
             }
         }
         // Adding rest of day if there's time left
-        if (avTime.duration() > 0){
-        avTimes.add(avTime);
+        if (avaliableTimeRange.duration() > 0){
+        avaliableTimesList.add(avaliableTimeRange);
         }
-        return avTimes;
+        return avaliableTimesList;
     }
     
     public boolean compareDuration(TimeRange newTime, long duration) {
@@ -88,5 +97,4 @@ public final class FindMeetingQuery {
         // If the the event is longer than the proposed time, the time is considered unavaliable.
         return (duration <= newTime.duration());
     }
-
 }
